@@ -3,78 +3,135 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Scoreboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cherry+Cream+Soda&display=swap"
+      rel="stylesheet"
+    />
+    <title>Goldencup Classic 3 Teams</title>
     <style>
+      body,
       table {
-        border: 1px solid #ddd; /* Gray border */
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        font-family: "Cherry Cream Soda", system-ui;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 18px;
+        background: #f1f1f1;
+        letter-spacing: 2px;
+        align-items: center;
+      }
+      input[type="number"],
+      td,
+      th {
+        padding: 8px;
+        text-align: center;
+      }
+      button,
+      th {
+        background-color: rgb(0, 43, 34);
+        color: #fff;
+      }
+      tbody tr:nth-child(odd) {
+        background-color: rgba(1, 184, 147, 0.571);
+      }
+      tbody tr:nth-child(2n) {
+        background-color: rgba(45, 159, 137, 0.319);
+      }
+      tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000;
+      }
+      table {
+        border: 1px solid #ddd;
+        border-radius: 18px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         width: 100%;
         margin-bottom: 20px;
-        border-collapse: collapse;
-        font-family: Arial, sans-serif;
+        border-collapse: separate;
+        background-color: rgba(255, 255, 255, 0.5);
       }
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-        font-family: Arial, sans-serif;
+      td,
+      th {
+        border-right: 1px solid #ddd;
       }
-      td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-        background-color: rgba(255, 255, 255, 0.3);
-      }
-      td:nth-child(2) {
-        background-color: rgba(255, 255, 255, 0.7);
+      td:last-child,
+      th:last-child {
+        border-right: none;
       }
       th {
-        background-color: #247ba0;
-        color: white;
-        border: 1px solid #ddd;
         padding: 8px;
-        text-align: center;
-        font-family: Arial, sans-serif;
       }
-      .score-input {
-        background-color: rgba(255, 255, 255, 0.3);
-        width: 10%;
-        border: 1px solid grey;
-        border-radius: 8px;
-        padding: 8px;
-        margin-bottom: 10px;
-        font-family: Arial, sans-serif;
+      input[type="number"] {
+        background-color: rgb(255, 255, 255);
+        margin: 0;
+        width: 100px;
+        border: 2px solid rgb(0, 43, 34);
+        border-radius: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        font-size: 16px;
       }
-      #update-scoreboard {
-        background-color: #247ba0;
-        color: white;
-        padding: 10px 24px;
-        margin: 10px 0;
+      button {
+        background-color: #360101;
+        color: #fff;
+        padding: 20px 44px;
+        margin: 20px 0 40px 0px;
         border: none;
-        border-radius: 4px;
+        border-radius: 50px;
         cursor: pointer;
         font-size: 16px;
+        box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.6);
+        width: 400px;
+      }
+      @media (max-width: 480px) {
+        body {
+          font-size: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          overflow-y: hidden;
+        }
+        input[type="number"] {
+          width: 60px;
+        }
+        table {
+          max-width: 100% !important;
+          font-size: 18px;
+        }
+        button {
+          padding: 18px 22px;
+          font-size: 15px;
+        }
+      }
+      @media (min-width: 481px) and (max-width: 1024px) {
+        body,
+        table {
+          font-size: 16px;
+          letter-spacing: 1px;
+        }
+        input[type="number"] {
+          width: 40px !important;
+          font-size: 16px;
+        }
+        button {
+          padding: 18px 22px;
+          font-size: 15px;
+        }
       }
     </style>
   </head>
   <body>
     <h2>Bracket A Scores</h2>
-    <form id="scoreFormA"></form>
-    <button id="update-scoreboard" onclick="updateScores('A')">
-      Update Bracket A Scoreboard
-    </button>
+    <table id="scoreFormA"></table>
+    <button onclick="updateScores('A')">Update Bracket A Scoreboard</button>
     <table id="scoreboardA"></table>
     <h2>Bracket B Scores</h2>
-    <form id="scoreFormB"></form>
-    <button id="update-scoreboard" onclick="updateScores('B')">
-      Update Bracket B Scoreboard
-    </button>
+    <table id="scoreFormB"></table>
+    <button onclick="updateScores('B')">Update Bracket B Scoreboard</button>
     <table id="scoreboardB"></table>
-    <script>
-      // Just change the Team Names
-      let bracketA=["A","B","C"],bracketB=["E","F","G"],matchesA=generateSchedule(bracketA),matchesB=generateSchedule(bracketB),scoresA={},scoresB={};function generateSchedule(e){let t=[];for(let o=0;o<e.length;o++)for(let a=o+1;a<e.length;a++)t.push({team1:e[o],team2:e[a]});return t}function createMatchInputs(e,t){let o=document.getElementById(t);e.forEach((e,a)=>{let n=document.createElement("label");n.textContent=e.team1+" vs "+e.team2+": ";let r=document.createElement("input");r.type="number",r.className="score-input",r.id=t+"_team1_"+a;let l=document.createElement("input");l.type="number",l.className="score-input",l.id=t+"_team2_"+a,o.appendChild(n),o.appendChild(r),o.appendChild(document.createTextNode(" - ")),o.appendChild(l),o.appendChild(document.createElement("br"))})}function updateScores(e){let t="A"===e?matchesA:matchesB,o="A"===e?scoresA:scoresB,a={};t.forEach((t,n)=>{let r=parseInt(document.getElementById("scoreForm"+e+"_team1_"+n).value),l=parseInt(document.getElementById("scoreForm"+e+"_team2_"+n).value);isNaN(r)||isNaN(l)||(o[t.team1+" vs "+t.team2]=r+" - "+l,updateScoreTable(a,t.team1,t.team2,r,l))}),displayScoreboard(sortScoreTable(a,o,t),a,"scoreboard"+e)}function updateScoreTable(e,t,o,a,n){e[t]=e[t]||{points:0,goalsScored:0,goalsConceded:0},e[o]=e[o]||{points:0,goalsScored:0,goalsConceded:0},e[t].goalsScored+=a,e[o].goalsScored+=n,e[t].goalsConceded+=n,e[o].goalsConceded+=a,a>n?e[t].points+=3:a<n?e[o].points+=3:(e[t].points+=1,e[o].points+=1)}function sortScoreTable(e,t,o){let a=Object.keys(e);return a.sort((o,a)=>{if(e[o].points!==e[a].points)return e[a].points-e[o].points;if(e[o].goalsScored-e[o].goalsConceded!=e[a].goalsScored-e[a].goalsConceded)return e[a].goalsScored-e[a].goalsConceded-(e[o].goalsScored-e[o].goalsConceded);{let n=t[o+" vs "+a]||t[a+" vs "+o];if(n){let[r,l]=n.split(" - ").map(Number);return l-r}return 0}}),a}function displayScoreboard(e,t,o){let a=document.getElementById(o);a.innerHTML="";let n=a.createTHead().insertRow();["Team","Points","Goals Scored","Goals Conceded","Goal Difference",].forEach(e=>{let t=document.createElement("th");t.textContent=e,n.appendChild(t)});let r=document.createElement("tbody");a.appendChild(r),e.forEach(e=>{let o=r.insertRow(),a=o.insertCell();a.textContent=e,(a=o.insertCell()).textContent=t[e].points,(a=o.insertCell()).textContent=t[e].goalsScored,(a=o.insertCell()).textContent=t[e].goalsConceded,(a=o.insertCell()).textContent=t[e].goalsScored-t[e].goalsConceded})}createMatchInputs(matchesA,"scoreFormA"),createMatchInputs(matchesB,"scoreFormB");
-    </script>
+    <script src="./mini_goldencup_3on3.js"></script>
   </body>
 </html>

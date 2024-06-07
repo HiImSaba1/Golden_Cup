@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <title>Golden Cup Projects</title>
+    <style>
+     @import url(https://fonts.cdnfonts.com/css/antique-olive-std);#title,main{display:flex}.replay,body{overflow:hidden}#background,#blur,main{position:absolute;width:100%;height:100%}#title,#video-container,.replay>.text{pointer-events:none}:root{--yellow:#ffd074;--purple:#a374ff;--turquois:#15f0d1}*{margin:0;padding:0;box-sizing:border-box}body{width:100vw;height:100vh;background:#1d1d1f;font-family:"Antique Olive Std",sans-serif}#background{z-index:-1}#blob{position:absolute;background-color:#fff;height:36vmax;aspect-ratio:1;background:linear-gradient(to right,#785599,#9e8548);border-radius:50%;opacity:.8;left:50%;top:50%;translate:-50% -50%}#blur{backdrop-filter:blur(8vmax);-webkit-backdrop-filter:blur(8vmax)}main{flex-direction:column;justify-content:center;align-items:center;perspective:2000px;user-select:none}#title,.word{justify-content:center}#video-container{width:580px;height:520px;overflow:hidden;position:relative;border-radius:40px;transform-style:preserve-3d;scale:0}#video-container>*{width:115%;height:115%;position:absolute;top:-7%;left:-7%;object-fit:cover}.replay,.word{position:relative;display:flex}#title{position:absolute;align-items:center;flex-direction:column;transform:translate3D(300px,0,0)}.word{align-items:center;color:#fafaf5;font-size:120px;font-weight:900;line-height:103px;letter-spacing:-7px}.word:nth-child(2){transform:translateX(-180px)}.word:nth-child(3){transform:translateX(110px)}.replay{padding:10px 20px;margin:10px;background-color:var(--yellow);border:none;border-radius:25px;font-size:16px;cursor:pointer;transition:transform .3s,background-color .3s}.replay:hover{transform:scale(1.1);background-color:var(--purple)}.replay:active{background-color:var(--turquois)}.replay .text{position:relative;z-index:2}.replay span[id^=text-]{transition:opacity .3s}.replay #text-static,.replay:hover #text-reveal{opacity:1}.replay #text-reveal,.replay:hover #text-static{opacity:0}.replay span[id^=purple],.replay span[id^=turquois],.replay span[id^=yellow]{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:300%;height:300%;border-radius:50%;transition:opacity .3s,transform .3s;z-index:1}.replay:hover span[id^=purple]{opacity:.7;transform:translate(-50%,-50%) scale(.8)}.replay:hover span[id^=turquois]{opacity:.5;transform:translate(-50%,-50%) scale(.9)}.replay:hover span[id^=yellow]{opacity:.3;transform:translate(-50%,-50%) scale(1)}.button-container{gap:10px;margin:30px}
+    </style>
+  </head>
+  <body>
+    <section id="background">
+      <div id="blob"></div>
+      <div id="blur"></div>
+    </section>
+
+    <main>
+      <div id="video-container">
+        <video
+          poster="/assets/general/_webpTransform/ezgif.com-gif-maker.webp"
+          src="https://player.vimeo.com/progressive_redirect/playback/725952347/rendition/1080p/file.mp4?loc=external&amp;signature=57a7c3522f4c7c21f8123a490b67c603be4efaa02c9c70cfde99789ab3ea9a29"
+          muted
+          autoplay
+          loop
+          playsinline
+        ></video>
+      </div>
+
+      <div id="title">
+        <span class="word">
+          <span class="char">g</span>
+          <span class="char">o</span>
+          <span class="char">l</span>
+          <span class="char">d</span>
+          <span class="char">e</span>
+          <span class="char">n</span>
+          <span class="char">c</span>
+          <span class="char">u</span>
+          <span class="char">p</span>
+          <span class="char">!</span>
+        </span>
+        <span class="word">
+          <span class="char">t</span>
+          <span class="char">o</span>
+          <span class="char">u</span>
+          <span class="char">r</span>
+          <span class="char">n</span>
+          <span class="char">a</span>
+          <span class="char">m</span>
+          <span class="char">e</span>
+          <span class="char">n</span>
+          <span class="char">t</span>
+        </span>
+        <span class="word">
+          <span class="char">s</span>
+          <span class="char">c</span>
+          <span class="char">h</span>
+          <span class="char">e</span>
+          <span class="char">d</span>
+          <span class="char">u</span>
+          <span class="char">l</span>
+          <span class="char">e</span>
+          <span class="char">s</span>
+        </span>
+      </div>
+      <div class="button-container">
+        <button class="replay" onclick="redirectToProject('Classic_goldencup')">
+          <span id="purple"></span>
+          <span id="turquois"></span>
+          <span id="yellow"></span>
+          <span class="text" id="text-static">Classic</span>
+          <span class="text" id="text-reveal">Classic</span>
+        </button>
+
+        <button class="replay" onclick="redirectToProject('Mini_3on3')">
+          <span id="purple"></span>
+          <span id="turquois"></span>
+          <span id="yellow"></span>
+          <span class="text" id="text-static">3 on 3</span>
+          <span class="text" id="text-reveal"> 3 on 3</span>
+        </button>
+
+        <button class="replay" onclick="redirectToProject('Mini_5Teams')">
+          <span id="purple"></span>
+          <span id="turquois"></span>
+          <span id="yellow"></span>
+          <span class="text" id="text-static">5 Teams </span>
+          <span class="text" id="text-reveal">5 Teams</span>
+        </button>
+      </div>
+    </main>
+    <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+    <!-- Logic -->
+    <script>
+function redirectToProject(o){window.location.href="http://127.0.0.1:5500/"+o+"/index.html"}let allowRotation=!0;function blobRotate(){let o=gsap.timeline({repeat:-1,ease:"none"}).to("#blob",{rotation:180,scaleX:1.6}).to("#blob",{rotation:360,scaleX:1}).totalDuration(17);o.play()}function blobFollowMouse(o,t){gsap.to("#blob",{left:o,top:t,duration:2})}function rotateVideo3D(o,t){gsap.to("#video-container",{rotateX:-20*t,rotateY:20*o,duration:.5,ease:"power1.out"})}function videoButtonPopIn(){allowRotation=!1,gsap.fromTo("#replay, #video-container",{scale:0},{scale:1,ease:"elastic.out(1, 0.8)",duration:.8,delay:.4,onComplete(){allowRotation=!0}})}function titleSlideIn(){document.querySelectorAll(".word").forEach((o,t)=>{Array.from(o.children).forEach((o,e)=>{gsap.fromTo(o,{opacity:0,x:0},{opacity:1,x:-300,ease:"elastic.out(1.1, 0.7)",duration:1.2,delay:.2*t+.03*e})})})}function buttonColorsWave(){gsap.fromTo("#purple",{scale:0},{scale:1}),gsap.fromTo("#turquois",{scale:0},{scale:1,delay:.1}),gsap.fromTo("#yellow",{scale:0},{scale:1,delay:.2})}function buttonTextIn(){gsap.fromTo(".text",{y:0},{y:0}),gsap.fromTo("#text-static",{opacity:1},{opacity:0}),gsap.fromTo("#text-reveal",{opacity:0},{opacity:1})}function buttonGrow(o){gsap.to(o,{width:170,height:46})}function buttonShrink(o){gsap.to(o,{width:180,height:50})}window.addEventListener("mousemove",o=>{let{clientX:t,clientY:e}=o;blobFollowMouse(t,e);let n=document.querySelector("#video-container"),i=n.getBoundingClientRect(),l=i.left+i.width/2,a=i.top+i.height/2,r=(t-l)/i.width,c=(e-a)/i.height;allowRotation&&rotateVideo3D(r,c)}),document.querySelectorAll(".replay").forEach(o=>{o.addEventListener("mouseover",()=>{buttonGrow(o),buttonTextIn(),btnPlayed||(buttonColorsWave(),btnPlayed=!0)}),o.addEventListener("mouseout",()=>{buttonShrink(o),btnPlayed=!1}),o.addEventListener("click",()=>{titleSlideIn(),videoButtonPopIn()})}),titleSlideIn(),videoButtonPopIn(),blobRotate();
+    </script>
+  </body>
+</html>
