@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scoreboard</title>
+    <style>
+      table {
+        border: 1px solid #ddd; /* Gray border */
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        margin-bottom: 20px;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        font-family: Arial, sans-serif;
+      }
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+      td:nth-child(2) {
+        background-color: rgba(255, 255, 255, 0.7);
+      }
+      th {
+        background-color: #247ba0;
+        color: white;
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        font-family: Arial, sans-serif;
+      }
+      .score-input {
+        background-color: rgba(255, 255, 255, 0.3);
+        width: 10%;
+        border: 1px solid grey;
+        border-radius: 8px;
+        padding: 8px;
+        margin-bottom: 10px;
+        font-family: Arial, sans-serif;
+      }
+      #update-scoreboard {
+        background-color: #247ba0;
+        color: white;
+        padding: 10px 24px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Bracket A Scores</h2>
+    <form id="scoreFormA"></form>
+    <button id="update-scoreboard" onclick="updateScores('A')">
+      Update Bracket A Scoreboard
+    </button>
+    <table id="scoreboardA"></table>
+    <h2>Bracket B Scores</h2>
+    <form id="scoreFormB"></form>
+    <button id="update-scoreboard" onclick="updateScores('B')">
+      Update Bracket B Scoreboard
+    </button>
+    <table id="scoreboardB"></table>
+    <script>
+      // Just change the Team Names
+      let bracketA=["A","B","C"],bracketB=["E","F","G"],matchesA=generateSchedule(bracketA),matchesB=generateSchedule(bracketB),scoresA={},scoresB={};function generateSchedule(e){let t=[];for(let o=0;o<e.length;o++)for(let a=o+1;a<e.length;a++)t.push({team1:e[o],team2:e[a]});return t}function createMatchInputs(e,t){let o=document.getElementById(t);e.forEach((e,a)=>{let n=document.createElement("label");n.textContent=e.team1+" vs "+e.team2+": ";let r=document.createElement("input");r.type="number",r.className="score-input",r.id=t+"_team1_"+a;let l=document.createElement("input");l.type="number",l.className="score-input",l.id=t+"_team2_"+a,o.appendChild(n),o.appendChild(r),o.appendChild(document.createTextNode(" - ")),o.appendChild(l),o.appendChild(document.createElement("br"))})}function updateScores(e){let t="A"===e?matchesA:matchesB,o="A"===e?scoresA:scoresB,a={};t.forEach((t,n)=>{let r=parseInt(document.getElementById("scoreForm"+e+"_team1_"+n).value),l=parseInt(document.getElementById("scoreForm"+e+"_team2_"+n).value);isNaN(r)||isNaN(l)||(o[t.team1+" vs "+t.team2]=r+" - "+l,updateScoreTable(a,t.team1,t.team2,r,l))}),displayScoreboard(sortScoreTable(a,o,t),a,"scoreboard"+e)}function updateScoreTable(e,t,o,a,n){e[t]=e[t]||{points:0,goalsScored:0,goalsConceded:0},e[o]=e[o]||{points:0,goalsScored:0,goalsConceded:0},e[t].goalsScored+=a,e[o].goalsScored+=n,e[t].goalsConceded+=n,e[o].goalsConceded+=a,a>n?e[t].points+=3:a<n?e[o].points+=3:(e[t].points+=1,e[o].points+=1)}function sortScoreTable(e,t,o){let a=Object.keys(e);return a.sort((o,a)=>{if(e[o].points!==e[a].points)return e[a].points-e[o].points;if(e[o].goalsScored-e[o].goalsConceded!=e[a].goalsScored-e[a].goalsConceded)return e[a].goalsScored-e[a].goalsConceded-(e[o].goalsScored-e[o].goalsConceded);{let n=t[o+" vs "+a]||t[a+" vs "+o];if(n){let[r,l]=n.split(" - ").map(Number);return l-r}return 0}}),a}function displayScoreboard(e,t,o){let a=document.getElementById(o);a.innerHTML="";let n=a.createTHead().insertRow();["Team","Points","Goals Scored","Goals Conceded","Goal Difference",].forEach(e=>{let t=document.createElement("th");t.textContent=e,n.appendChild(t)});let r=document.createElement("tbody");a.appendChild(r),e.forEach(e=>{let o=r.insertRow(),a=o.insertCell();a.textContent=e,(a=o.insertCell()).textContent=t[e].points,(a=o.insertCell()).textContent=t[e].goalsScored,(a=o.insertCell()).textContent=t[e].goalsConceded,(a=o.insertCell()).textContent=t[e].goalsScored-t[e].goalsConceded})}createMatchInputs(matchesA,"scoreFormA"),createMatchInputs(matchesB,"scoreFormB");
+    </script>
+  </body>
+</html>

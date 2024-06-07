@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Match Schedule</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cherry+Cream+Soda&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      table {
+        font-family: "Cherry Cream Soda", system-ui;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 18px;
+        background: #f1f1f1;
+        letter-spacing: 2px;
+        align-items: center;
+      }
+      .score-input,
+      td,
+      th {
+        padding: 8px;
+        text-align: center;
+      }
+      #update-scoreboard,
+      th {
+        background-color: rgb(0, 43, 34);
+        color: #fff;
+      }
+      tbody tr:nth-child(odd) {
+        background-color: rgba(1, 184, 147, 0.571);
+      }
+      tbody tr:nth-child(2n) {
+        background-color: rgba(45, 159, 137, 0.319);
+      }
+      tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000;
+      }
+      table {
+        border: 1px solid #ddd;
+        border-radius: 18px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        margin-bottom: 20px;
+        border-collapse: separate;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+      td,
+      th {
+        border-right: 1px solid #ddd;
+      }
+      td:last-child,
+      th:last-child {
+        border-right: none;
+      }
+      th {
+        padding: 8px;
+      }
+      .score-input-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 8px;
+      }
+      .score-input {
+        background-color: rgb(255, 255, 255);
+        margin: 0;
+        width: 90px;
+        border: 2px solid rgb(0, 43, 34);
+        border-radius: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        font-size: 16px;
+      }
+      #update-scoreboard {
+        background-color: #360101;
+        color: #fff;
+        padding: 20px 44px;
+        margin: 20px 0 40px 0px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 16px;
+        box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.6);
+        width: 400px;
+      }
+      @media (max-width: 480px) {
+        body {
+          font-size: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          overflow-y: hidden;
+        }
+        .score-input {
+          width: 60px;
+        }
+        #match-schedule,
+        .responsive-table {
+          max-width: 100% !important;
+          font-size: 18px;
+        }
+      }
+      @media (min-width: 481px) and (max-width: 1024px) {
+        body,
+        table {
+          font-size: 14px;
+          letter-spacing: 1px;
+        }
+        .score-input {
+          width: 40px !important;
+          font-size: 14px;
+        }
+        #update-scoreboard {
+          padding: 18px 22px;
+          font-size: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Bracket Scores</h2>
+    <div class="responsive-table">
+      <table class="table" id="match-schedule">
+        <thead>
+          <tr>
+            <th class="time-column">Time</th>
+            <th class="match-1-column">Match 1</th>
+            <th class="score-input-column">Score Input</th>
+            <th class="match-2-column">Match 2</th>
+            <th class="score-input-column">Score Input</th>
+            <th class="Relax-column">Relax</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <button id="update-scoreboard" onclick="updateScores()">
+      Update Scoreboard
+    </button>
+    <div class="responsive-table">
+      <table id="scoreboard">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>Points</th>
+            <th>Goals Scored</th>
+            <th>Goals Conceded</th>
+            <th>Goal Difference</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <script>
+      let teams = ["ΑΣΤ. ΑΓ. ΝΙΚΟΛΑΟΥ Α", "ΦΟΙΝΙΚΑΣ ΝΙΚΗΤΗΣ", "ΑΣΤ. ΑΓ. ΝΙΚΟΛΑΟΥ B", "ΑΕΤΟΣ ΒΑΡΒΑΡΑΣ", "ΗΦΑΙΣΤΟΣ ΘΕΡΜΗΣ"],
+        matches = generateSchedule(teams),
+        scores = initializeScores(teams);
+      function generateSchedule(e) {
+        return [
+          [[e[0], e[1]], [e[2], e[3]], e[4]],
+          [[e[0], e[2]], [e[1], e[4]], e[3]],
+          [[e[0], e[3]], [e[2], e[4]], e[1]],
+          [[e[0], e[4]], [e[1], e[3]], e[2]],
+          [[e[2], e[1]], [e[3], e[4]], e[0]],
+        ];
+      }
+      function initializeScores(e) {
+        let t = {};
+        return (
+          e.forEach((e) => {
+            t[e] = { points: 0, goalsScored: 0, goalsConceded: 0 };
+          }),
+          t
+        );
+      }
+      function createMatchScheduleTable() {
+        let e = document
+            .getElementById("match-schedule")
+            .getElementsByTagName("tbody")[0],
+          t = new Date();
+        t.setHours(10, 0, 0),
+          matches.forEach((s, n) => {
+            let o = e.insertRow(),
+              r = o.insertCell(),
+              c = o.insertCell(),
+              l = o.insertCell(),
+              i = o.insertCell(),
+              a = o.insertCell(),
+              d = o.insertCell();
+            (r.textContent = t.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: !1,
+            })),
+              (c.textContent = s[0].join(" vs ")),
+              (l.innerHTML = `<div class="score-input-container"><input type="number" id="score-input-${n}-1-team1" class="score-input" placeholder="T1 Score"><input type="number" id="score-input-${n}-1-team2" class="score-input" placeholder="T2 Score"></div>`),
+              (i.textContent = s[1].join(" vs ")),
+              (a.innerHTML = `<div class="score-input-container"><input type="number" id="score-input-${n}-2-team1" class="score-input" placeholder="T1 Score"><input type="number" id="score-input-${n}-2-team2" class="score-input" placeholder="T2 Score"></div>`),
+              (d.textContent = s[2]),
+              t.setMinutes(t.getMinutes() + 30);
+          });
+      }
+      function updateScores() {
+        matches.forEach((e, t) => {
+          let s = document.getElementById(`score-input-${t}-1-team1`),
+            n = document.getElementById(`score-input-${t}-1-team2`),
+            o = document.getElementById(`score-input-${t}-2-team1`),
+            r = document.getElementById(`score-input-${t}-2-team2`),
+            c = parseInt(s.value),
+            l = parseInt(n.value),
+            i = parseInt(o.value),
+            a = parseInt(r.value);
+          isNaN(c) ||
+            isNaN(l) ||
+            s.disabled ||
+            (updateScoreTable(e[0][0], e[0][1], c, l),
+            (s.disabled = !0),
+            (n.disabled = !0)),
+            isNaN(i) ||
+              isNaN(a) ||
+              o.disabled ||
+              (updateScoreTable(e[1][0], e[1][1], i, a),
+              (o.disabled = !0),
+              (r.disabled = !0));
+        }),
+          displayScoreboard();
+      }
+      function updateScoreTable(e, t, s, n) {
+        (scores[e].goalsScored += s),
+          (scores[t].goalsScored += n),
+          (scores[e].goalsConceded += n),
+          (scores[t].goalsConceded += s),
+          s > n
+            ? (scores[e].points += 3)
+            : s < n
+            ? (scores[t].points += 3)
+            : ((scores[e].points += 1), (scores[t].points += 1));
+      }
+      function displayScoreboard() {
+        let e = document
+          .getElementById("scoreboard")
+          .getElementsByTagName("tbody")[0];
+        e.innerHTML = "";
+
+        // Convert scores object to array
+        let scoresArray = Object.keys(scores).map((team) => ({
+          team: team,
+          ...scores[team],
+          goalDifference: scores[team].goalsScored - scores[team].goalsConceded,
+        }));
+
+        // Sort the array based on points and goal difference
+        scoresArray.sort((a, b) => {
+          if (a.points === b.points) {
+            return b.goalDifference - a.goalDifference;
+          }
+          return b.points - a.points;
+        });
+
+        // Display the sorted results
+        scoresArray.forEach((score) => {
+          let s = e.insertRow(),
+            n = s.insertCell(),
+            o = s.insertCell(),
+            r = s.insertCell(),
+            c = s.insertCell(),
+            l = s.insertCell();
+          n.textContent = score.team;
+          o.textContent = score.points;
+          r.textContent = score.goalsScored;
+          c.textContent = score.goalsConceded;
+          l.textContent = score.goalDifference;
+        });
+      }
+      createMatchScheduleTable();
+    </script>
+  </body>
+</html>
